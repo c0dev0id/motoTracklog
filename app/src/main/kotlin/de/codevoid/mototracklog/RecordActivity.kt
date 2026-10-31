@@ -166,6 +166,10 @@ class RecordActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { LoggingStateHolder.state.collect { renderRecord() } }
+                // The GPS source tile is locked exactly while a run is active.
+                launch {
+                    LoggingStateHolder.state.map { it.runId }.distinctUntilChanged().collect { invalidateSettings() }
+                }
                 launch { viewModel.latestRun.collect { renderRecord() } }
             }
         }
