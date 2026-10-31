@@ -56,11 +56,10 @@ flowchart LR
     service --> lm
     bt --> btstack --> receiver
     export --> share
-    update -- release builds --> gh
-    update -- dev builds --> dist
+    update -- download --> dist
     update -- install --> installer
     ci -- publishes APK --> gh
-    ci -- pushes dev APK --> dist
+    ci -- pushes APKs --> dist
 
     classDef primary fill:#2F6FED,stroke:#1E4FB0,color:#FFFFFF
     classDef external fill:#EEF1F5,stroke:#9AA5B4,color:#14181D

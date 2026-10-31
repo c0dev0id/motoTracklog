@@ -25,8 +25,8 @@
   orientation, navigation bar, app permissions, update check.
 - **Debug NMEA log.** Optionally tees the raw NMEA stream of a run, with the chipset's
   model and capabilities for the internal GPS, to a shareable text file.
-- **Self-update.** A user-triggered check against the latest release for a release build,
-  or the newest build in the home.codevoid.de dist store for a dev build, with progress
-  on the tile and a hand-off to the system installer.
+- **Self-update.** A user-triggered check against the home.codevoid.de dist store, the
+  release channel for a release build and the nightly channel for a dev build, with
+  progress on the tile and a hand-off to the system installer.
 - **Themes and sizing.** Dark (default) and light themes; glove sizing for the 7" device
   with a scaled-down phone variant; landscape and portrait layouts.

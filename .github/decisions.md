@@ -251,14 +251,15 @@ The updater lives in `main`; the github source set adds `INTERNET` and
 when it is added.
 
 ### Update channels, version code and releases follow motoLauncher
-A release build queries GitHub's latest release and takes its version from the asset
-name. A `dev-` build queries the `latest` address of the home.codevoid.de dist store and
-takes the version the push sent. The store's `latest` is the newest push to one dist
-repository, so a dist repository is one channel and only dev builds push to this one.
-The read key in `UpdateChecker` is no secret: it ships in every APK. CI names the file
-`motoTracklog-<versionName>.apk` like the GitHub asset, because `deleteInstalledUpdate()`
-finds the installed update by that name. The `dev` pre-release stays as a download page;
-the updater no longer reads it. `versionCode` is the commit count of `main`. Releases are
+Both channels are channels of the app's home.codevoid.de dist repository: a `dev-` build
+reads `nightly/latest`, a release build `release/latest`, and the installed version name
+picks the channel, so there is no setting. A channel's `latest` is its newest push, and
+the version is the one the push sent. The read key in `UpdateChecker` is no secret: it
+ships in every APK. `deleteInstalledUpdate()` finds the installed update by its file name,
+`motoTracklog-<versionName>.apk`, which is why CI names the pushed files that way. The
+GitHub release and the `dev` pre-release stay as download pages; the updater reads
+neither, so all motoSuite apps update the same way whether their repository is public or
+private. `versionCode` is the commit count of `main`. Releases are
 cut by hand from `main` and pushed atomically after the build succeeds.
 
 ## Build and CI
