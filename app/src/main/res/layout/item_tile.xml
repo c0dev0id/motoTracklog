@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A text tile: label and an optional subtitle, on the tile background. -->
+<!-- A text tile: label and an optional subtitle, on the tile background. Touch-only. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tileRoot"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/tile_background"
-    android:focusable="true"
+    android:focusable="false"
     android:clickable="true"
     android:padding="@dimen/tile_padding">
 

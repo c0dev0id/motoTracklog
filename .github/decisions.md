@@ -58,10 +58,15 @@ motoLauncher through a new contract; neither was wanted. A held Escape therefore
 what a short one does. A gloved press is not timed precisely, and a hold that did
 nothing would read as a dead key.
 
-### Everything that needs touch to leave is unreachable by dpad
+### Off the Record screen, the remote reaches nothing
+The remote matters only while riding, and while riding only Start and Pause/Resume do.
 The Record header (Runs, Settings) and the latest-run row are in `TouchOnlyRow`s. Runs,
-Export and settings mode are entered only by touch. Once there, tiles and rows are
-focusable as in motoLauncher's settings mode, and Escape leaves.
+Export and settings mode are entered and operated by touch only: list rows, tiles and
+Share GPX are unfocusable, and Escape is the remote's one key there. The settings grid
+and the run list are made unfocusable in code, because `RecyclerView` calls
+`setFocusableInTouchMode(true)` in its constructor, after the XML attributes are applied.
+motoLauncher keeps its app grid remote-reachable and makes only its configuration tiles
+touch-only; this app has no such grid.
 
 ### Key long-press is blocked; a key-up clicks only the view it pressed
 `blockKeyLongPress()` clicks on the release of a confirm key (DPAD_CENTER, Enter,

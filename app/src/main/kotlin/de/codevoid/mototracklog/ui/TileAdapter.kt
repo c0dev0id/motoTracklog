@@ -34,9 +34,7 @@ class TileAdapter(private var items: List<TileItem>) :
     class TileViewHolder(val binding: ItemTileBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TileViewHolder {
-        val binding = ItemTileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.root.blockKeyLongPress()
-        return TileViewHolder(binding)
+        return TileViewHolder(ItemTileBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount() = items.size

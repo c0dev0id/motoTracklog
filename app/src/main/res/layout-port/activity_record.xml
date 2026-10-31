@@ -74,8 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:focusable="false"
-            android:descendantFocusability="afterDescendants"
             android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>

@@ -60,8 +60,10 @@ styles) are copies. A change to one belongs in every app that carries it.
 - **The remote reaches only Start and Pause/Resume.** On the Record screen the primary
   tile is the one focusable view. Stop sits in a `TouchOnlyRow`: a mis-press on the road
   may pause a run but never end it. The header (Runs, Settings) and the latest-run row
-  are touch-only. Dpad traversal is the native View focus engine; do not add custom key
-  handling.
+  are touch-only. Runs, Export and settings mode have nothing focusable: rows, tiles and
+  Share GPX are unfocusable, and the two `RecyclerView`s are set unfocusable in code (their
+  constructor overrides the XML attribute). Dpad traversal is the native View focus
+  engine; do not add custom key handling.
 - **Escape goes back.** Short or held, Escape leaves settings mode, then the screen
   (`EscapeKeys` with the same action for both). It launches nothing.
 - **Orientation is a setting, Sensor by default**, applied in `onCreate` and `onResume`

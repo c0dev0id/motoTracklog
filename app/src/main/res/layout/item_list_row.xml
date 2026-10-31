@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- One entry of a list: a full-width row on the tile background, title over an optional
-     subtitle. The list counterpart of item_tile, for records identified by text. -->
+     subtitle. The list counterpart of item_tile, for records identified by text. Touch-only. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rowRoot"
     android:layout_width="match_parent"
@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:background="@drawable/tile_background"
-    android:focusable="true"
+    android:focusable="false"
     android:clickable="true"
     android:paddingHorizontal="@dimen/list_row_padding_h"
     android:paddingVertical="@dimen/list_row_padding_v">

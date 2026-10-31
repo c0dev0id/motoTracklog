@@ -63,6 +63,7 @@ class RunsActivity : AppCompatActivity() {
 
         binding.header.headerTitle.setText(R.string.runs)
         binding.header.backButton.setOnClickListener { finish() }
+        binding.runList.isFocusable = false
         binding.runList.layoutManager = LinearLayoutManager(this)
         binding.runList.adapter = adapter
 

@@ -47,11 +47,12 @@ switched off. The ride resumes on its own once the cause is gone.
 
 | Key | Record screen | Runs, Export, Settings |
 |---|---|---|
-| Dpad | Move to the Start / Pause / Resume tile | Move the highlight |
-| Enter | Start, pause or resume | Open or toggle |
+| Dpad | Move to the Start / Pause / Resume tile | — |
+| Enter | Start, pause or resume | — |
 | Escape | Leave settings, then close the app | Back |
 
-A held Escape does the same as a short one.
+A held Escape does the same as a short one. Runs, Export and Settings are touch-only; on
+those screens the remote only goes back.
 
 ## Export a ride as GPX
 

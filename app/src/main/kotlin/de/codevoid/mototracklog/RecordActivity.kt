@@ -150,6 +150,7 @@ class RecordActivity : AppCompatActivity() {
             noTransition()
         }
         binding.settingsButton.setOnClickListener { setSettingsMode(!viewModel.isSettingsMode) }
+        binding.settingsGrid.isFocusable = false
         binding.settingsGrid.layoutManager = GridLayoutManager(this, columns)
         binding.settingsGrid.adapter = settingsAdapter
 

@@ -29,11 +29,11 @@ To record from a Bluetooth receiver, pair it in Android first, then pick it in *
 
 | Key | Record screen | Runs, Export, Settings |
 |---|---|---|
-| Dpad | Move to the Start / Pause / Resume tile | Move the highlight |
-| Enter | Start, pause or resume | Open or toggle |
+| Dpad | Move to the Start / Pause / Resume tile | — |
+| Enter | Start, pause or resume | — |
 | Escape | Leave settings, then close | Back |
 
-Stop, Runs and Settings are touch-only.
+Everything except Start, Pause and Resume is touch-only.
 
 ## Export filters
 

@@ -28,9 +28,7 @@ class ListRowAdapter : RecyclerView.Adapter<ListRowAdapter.RowViewHolder>() {
     class RowViewHolder(val binding: ItemListRowBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {
-        val binding = ItemListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.root.blockKeyLongPress()
-        return RowViewHolder(binding)
+        return RowViewHolder(ItemListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount() = items.size
