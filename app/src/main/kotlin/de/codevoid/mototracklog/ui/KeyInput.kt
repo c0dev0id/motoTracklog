@@ -4,25 +4,25 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewConfiguration
 
-// Route DPAD_CENTER / ENTER through performClick() on ACTION_UP without arming the
-// framework's long-press timer. Touch long-press (setOnLongClickListener) still works;
-// keyboard/remote long-press does not, which stops a held remote button from reaching
-// touch-only destinations (app info, configuration) that a rider can't navigate back
-// out of without touching the screen.
+// Clicks on the release of a confirm key that pressed this view, without arming the
+// framework's long-press timer: a held key cannot open a long-press menu, a touch long press
+// still can.
 fun View.blockKeyLongPress() {
     setOnKeyListener { view, keyCode, event ->
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_CENTER,
             KeyEvent.KEYCODE_ENTER,
-            KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+            KeyEvent.KEYCODE_NUMPAD_ENTER,
+            KeyEvent.KEYCODE_SPACE -> {
                 when (event.action) {
                     KeyEvent.ACTION_DOWN -> {
                         if (event.repeatCount == 0) view.isPressed = true
                         true
                     }
                     KeyEvent.ACTION_UP -> {
+                        val click = view.isPressed && !event.isCanceled
                         view.isPressed = false
-                        view.performClick()
+                        if (click) view.performClick()
                         true
                     }
                     else -> true

@@ -63,6 +63,13 @@ The Record header (Runs, Settings) and the latest-run row are in `TouchOnlyRow`s
 Export and settings mode are entered only by touch. Once there, tiles and rows are
 focusable as in motoLauncher's settings mode, and Escape leaves.
 
+### Key long-press is blocked; a key-up clicks only the view it pressed
+`blockKeyLongPress()` clicks on the release of a confirm key (DPAD_CENTER, Enter,
+numpad Enter, Space) and never arms the framework's long-press timer, so a held remote
+button cannot open a long-press menu. The release clicks only when it ends a press on
+this view and is not canceled: a release whose press went to another window, or one the
+system cancels when focus leaves mid-press, does nothing. Carried over from motoLauncher.
+
 ### Dialog controls are touch-only
 A touch opens every dialog, but the first remote key afterwards used to focus its first
 row or button, and Enter then picked a setting or confirmed a delete. Every dialog row
