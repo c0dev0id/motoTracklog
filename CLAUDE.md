@@ -107,8 +107,8 @@ Package layout under `de.codevoid.mototracklog`:
   continues that run, so only Stop ends one. All run state lives on the
   `gps-logger` `HandlerThread`. Pause is cold (the source is released and the flag is
   persisted). A platform refusal (`startForeground`, a missing permission, no chipset,
-  Bluetooth off) is caught and never crashes; only a run that never began gives up its
-  marker. No wake lock, no `fdatasync`. UI state updates are throttled to 2 s and skipped
+  Bluetooth off, an internal-GPS resume with no screen visible and no background location on
+  11+) is caught and never crashes; only a run that never began gives up its marker. No wake lock, no `fdatasync`. UI state updates are throttled to 2 s and skipped
   while no screen is visible; the notification carries Pause/Resume and Stop. Android 9
   paths: `ServiceCompat`, `LocationListenerCompat` (abstract provider callbacks before 11),
   `LocationManagerCompat` for `hasProvider` and GNSS status, and the NMEA listener's

@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.location.LocationManager
 import android.net.Uri
@@ -384,10 +383,7 @@ class RecordActivity : AppCompatActivity() {
     // Resuming after a reboot starts the service from the background, which the location
     // service type allows only with background location. Asked once, right after the grant.
     private fun requestBackgroundLocation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) !=
-            PackageManager.PERMISSION_GRANTED
-        ) {
+        if (!hasBackgroundLocation()) {
             backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
         } else {
             requestBatteryExemption()

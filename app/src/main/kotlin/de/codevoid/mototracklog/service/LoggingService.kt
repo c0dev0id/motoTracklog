@@ -32,6 +32,7 @@ import de.codevoid.mototracklog.data.RunReader
 import de.codevoid.mototracklog.data.RunRepository
 import de.codevoid.mototracklog.data.RunWriter
 import de.codevoid.mototracklog.data.SourceStore
+import de.codevoid.mototracklog.hasBackgroundLocation
 import de.codevoid.mototracklog.hasBluetoothAccess
 import de.codevoid.mototracklog.hasPreciseLocation
 import de.codevoid.mototracklog.model.GpsRecord
@@ -146,6 +147,12 @@ class LoggingService : Service(), FixSink {
     }
 
     private fun startLogging(id: Long, newRun: Boolean) {
+        // A Start always comes from the Record screen; only a resume can be a background start.
+        if (!newRun && isBackgroundStartWithoutLocation()) {
+            Log.w(TAG, "resumed in the background without background location; waiting for the app")
+            stopLogging(clearActive = false)
+            return
+        }
         val file = runs.runFile(id)
         runId = id
         val summary = RunReader.summary(file)
@@ -182,6 +189,16 @@ class LoggingService : Service(), FixSink {
     }
 
     private fun isInternalSource(): Boolean = !sourceStore.isExternal
+
+    /**
+     * From Android 11, a location service started while no screen is visible (BootReceiver, a
+     * sticky restart) gets no fixes from the internal GPS without background location.
+     */
+    private fun isBackgroundStartWithoutLocation(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+            isInternalSource() &&
+            !LoggingStateHolder.uiVisible &&
+            !hasBackgroundLocation()
 
     /**
      * Whether the internal provider is switched on. "True if the provider exists and is enabled",

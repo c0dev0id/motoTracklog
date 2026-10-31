@@ -12,6 +12,10 @@ import androidx.core.content.ContextCompat
  */
 fun Context.hasPreciseLocation(): Boolean = isGranted(Manifest.permission.ACCESS_FINE_LOCATION)
 
+/** Location for a service started while no screen is visible: a runtime grant from Android 10. */
+fun Context.hasBackgroundLocation(): Boolean =
+    Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
 /** Paired devices and RFCOMM sockets: a runtime grant from Android 12, granted at install before. */
 fun Context.hasBluetoothAccess(): Boolean =
     Build.VERSION.SDK_INT < Build.VERSION_CODES.S || isGranted(Manifest.permission.BLUETOOTH_CONNECT)

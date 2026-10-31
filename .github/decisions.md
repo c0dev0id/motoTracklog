@@ -154,9 +154,11 @@ flag is stored next to the active run id, so a restart comes back paused. A Resu
 cannot re-acquire the source leaves the run paused rather than discarding it.
 
 ### A platform refusal never crashes, and only a run that never began loses its marker
-`startForeground` with the location type throws without a location permission, and a
-background start also needs background location. A missing chipset or Bluetooth that is
-off refuses the source. Each refusal is caught. At `BOOT_COMPLETED` Bluetooth is often not
+`startForeground` with the location type throws without a location permission, and from
+Android 14 a background start also needs background location. On Android 11 to 13 that
+start succeeds, but the internal GPS delivers no fixes to it, so the service refuses such
+a resume itself and the run waits for the Record screen, as it does on 14. A missing
+chipset or Bluetooth that is off refuses the source. Each refusal is caught. At `BOOT_COMPLETED` Bluetooth is often not
 up yet, so clearing the marker there would end a run the rider never stopped.
 
 ### An interrupted run resumes when the app comes to the front
