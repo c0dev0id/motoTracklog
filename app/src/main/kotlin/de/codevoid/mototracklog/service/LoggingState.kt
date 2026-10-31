@@ -1,0 +1,60 @@
+package de.codevoid.mototracklog.service
+
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+
+/** Live state of the current logging run, mirrored to the UI. */
+data class LoggingState(
+    val runId: Long? = null,
+    val startTimeMillis: Long? = null,
+    val pointCount: Long = 0,
+    val updateRateHz: Float = 0f,
+    val lastFixTimeMillis: Long? = null,
+    val speedMetersPerSecond: Float? = null,
+    val accuracyMeters: Float? = null,
+    /** False when the GPS provider is switched off in system settings. */
+    val gpsEnabled: Boolean = true,
+    /** True between GnssStatus.Callback.onStarted and onStopped, i.e. the receiver is powered. */
+    val gnssRunning: Boolean = false,
+    val satellitesVisible: Int = 0,
+    val satellitesUsedInFix: Int = 0,
+    val isPaused: Boolean = false,
+) {
+    /** A run is in progress exactly while it has an id. */
+    val isLogging: Boolean get() = runId != null
+
+    /** The GNSS engine reports satellites used in its current fix only while it has one. */
+    val hasFix: Boolean get() = satellitesUsedInFix > 0
+
+    /** The source stopped delivering; its satellite view means nothing until it is back. */
+    fun receiverStopped(): LoggingState = copy(gnssRunning = false, satellitesVisible = 0, satellitesUsedInFix = 0)
+}
+
+/**
+ * Process-global holder for [LoggingState]. The service writes it at the (throttled) UI rate; the
+ * Record screen collects it. Single process, so a plain singleton is sufficient — no Binder needed.
+ * State does not survive process death; "is a run active" is authoritative in ActiveRunStore.
+ *
+ * [uiVisible] is flipped by RecordActivity.onResume/onPause so the service can skip StateFlow
+ * updates when no screen is watching — no allocations and no view updates in the background.
+ */
+object LoggingStateHolder {
+    @Volatile var uiVisible: Boolean = false
+
+    private val _state = MutableStateFlow(LoggingState())
+    val state: StateFlow<LoggingState> = _state.asStateFlow()
+
+    fun set(state: LoggingState) {
+        _state.value = state
+    }
+
+    fun update(transform: (LoggingState) -> LoggingState) {
+        _state.update(transform)
+    }
+
+    fun reset() {
+        _state.value = LoggingState()
+    }
+}

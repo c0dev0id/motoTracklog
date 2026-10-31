@@ -1,0 +1,45 @@
+package de.codevoid.mototracklog.service
+
+import android.content.Context
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
+/**
+ * Appends the raw NMEA stream (and a few connection notes) to a plain-text file the user can share
+ * for diagnostics. Each line is prefixed with a wall-clock timestamp so the actual delivery rate and
+ * any gaps are measurable from the log. Opened by whoever starts the source and then written and
+ * closed only from the thread that reads the receiver, so no locking.
+ */
+class NmeaDebugLog(file: File) {
+
+    private val writer: BufferedWriter = BufferedWriter(FileWriter(file, /* append = */ true))
+
+    /** A `#`-prefixed annotation (connect/disconnect/error), not part of the NMEA stream. */
+    fun note(text: String) = writeLine("# $text")
+
+    fun line(nmea: String) = writeLine(nmea)
+
+    private fun writeLine(text: String) {
+        writer.write(TIME_FMT.format(Instant.now()))
+        writer.write("  ")
+        writer.write(text)
+        writer.newLine()
+        writer.flush()
+    }
+
+    fun close() {
+        runCatching { writer.close() }
+    }
+
+    companion object {
+        /** The one directory for captured logs, for the writer in the service and the Share debug log tile. */
+        fun dir(context: Context): File = File(context.cacheDir, "debug")
+
+        private val TIME_FMT: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("HH:mm:ss.SSS").withZone(ZoneId.systemDefault())
+    }
+}
