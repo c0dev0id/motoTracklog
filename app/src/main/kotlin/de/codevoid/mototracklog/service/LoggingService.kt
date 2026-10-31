@@ -475,6 +475,8 @@ class LoggingService : Service(), FixSink {
         if (clearActive) activeRun.clear()
         LoggingStateHolder.reset()
         mainHandler.post {
+            // A Start or Resume handled on the main thread since then owns the service now.
+            if (running) return@post
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             stopSelf()
         }
