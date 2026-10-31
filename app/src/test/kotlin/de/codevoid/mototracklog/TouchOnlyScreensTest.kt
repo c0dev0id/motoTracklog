@@ -3,6 +3,7 @@ package de.codevoid.mototracklog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.test.core.app.ApplicationProvider
 import de.codevoid.mototracklog.databinding.ActivityExportBinding
 import de.codevoid.mototracklog.databinding.ItemListRowBinding
@@ -21,7 +22,10 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class TouchOnlyScreensTest {
 
-    private val inflater = LayoutInflater.from(ApplicationProvider.getApplicationContext<Context>())
+    // The app theme, for the layouts' theme attributes.
+    private val inflater = LayoutInflater.from(
+        ContextThemeWrapper(ApplicationProvider.getApplicationContext<Context>(), R.style.Theme_MotoTracklog)
+    )
 
     // RecyclerView makes itself focusable in its constructor; the screen has to undo that.
     @Test
