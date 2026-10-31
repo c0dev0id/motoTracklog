@@ -104,6 +104,13 @@ Satellites, accuracy, points, rate, speed and GPS time, in display-only stat til
 the same slot shows the run just recorded, which leads to its Export page. Speed is shown
 in km/h or mph (a Units setting), not gpsLog's m/s; the file keeps m/s.
 
+### The controls are a row of the tile grid
+Start, Pause/Resume and Stop have the size of a stat tile and sit in the grid's bottom
+row: level with the bottom stat row in landscape, below the stats in portrait. A
+fixed-height action row centred under the status word never lined up with the weighted
+stat rows. Idle, the latest run takes the grid row level with Start. The status word
+fills the space the grid leaves above the controls.
+
 ### The subtitle needs no ticking clock
 The recorded span is last fix minus start: it advances with the fixes and freezes while
 paused.

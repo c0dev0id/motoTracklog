@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Landscape: status and controls on the left, live values (or the latest run) on the
-     right. Settings mode swaps the whole body for the settings grid. -->
+<!-- Landscape: one tile grid of three equal rows. Status in the top two rows on the left, the
+     controls in the bottom row; live values (or the latest run) on the right. Settings mode
+     swaps the whole body for the settings grid. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,16 +47,21 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
                 <include
                     android:id="@+id/status"
-                    layout="@layout/view_record_status" />
+                    layout="@layout/view_record_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2" />
 
                 <include
                     android:id="@+id/actions"
-                    layout="@layout/view_record_actions" />
+                    layout="@layout/view_record_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <FrameLayout

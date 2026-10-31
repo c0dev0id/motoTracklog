@@ -79,7 +79,9 @@ Package layout under `de.codevoid.mototracklog`:
 
 - `RecordActivity` — launcher entry (`singleTask`, so the notification returns to it).
   Status word from the pure `recordStatus()`, a subtitle composed from string resources,
-  six stat tiles while a run is active and the latest run while idle, and the action row.
+  six stat tiles while a run is active and the latest run while idle, and the action row,
+  which is a row of the same tile grid (level with the bottom stat row in landscape, below
+  the stats in portrait).
   Collects `LoggingStateHolder.state` and `RecordViewModel.latestRun` while started, and
   sets `LoggingStateHolder.uiVisible` in `onResume`/`onPause`. The idle status needs
   three platform facts (`hasInternalGps`, Location switched on, precise location); they

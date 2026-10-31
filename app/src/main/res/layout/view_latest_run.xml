@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The idle Record screen's shortcut to the run just recorded. Touch-only: it leads to
-     Export, which is an off-bike task. -->
+<!-- The idle Record screen's shortcut to the run just recorded, in the grid row level with
+     the Start tile, captioned from above. Touch-only: it leads to Export, which is an
+     off-bike task. -->
 <de.codevoid.mototracklog.ui.TouchOnlyRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginHorizontal="@dimen/tile_margin"
+        android:gravity="bottom|start"
         android:paddingHorizontal="@dimen/list_row_padding_h"
         android:text="@string/latest_run"
         android:textColor="@color/on_surface_muted"
@@ -17,5 +20,9 @@
 
     <include
         android:id="@+id/row"
-        layout="@layout/item_list_row" />
+        layout="@layout/item_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/tile_margin" />
 </de.codevoid.mototracklog.ui.TouchOnlyRow>

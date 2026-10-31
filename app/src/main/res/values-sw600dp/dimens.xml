@@ -30,7 +30,6 @@
     <dimen name="status_subtitle_margin_top">6dp</dimen>
 
     <dimen name="action_tile_height">128dp</dimen>
-    <dimen name="action_row_margin_top">16dp</dimen>
     <dimen name="text_action_tile">28sp</dimen>
 
     <dimen name="stat_tile_padding">10dp</dimen>

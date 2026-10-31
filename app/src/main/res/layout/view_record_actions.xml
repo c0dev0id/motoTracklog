@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Stop sits in a TouchOnlyRow: the remote reaches Start and Pause/Resume, never Stop, so a
-     mis-press on the road can pause a run but not end it. -->
+<!-- One row of the Record screen's tile grid; the including layout gives it the height of a
+     stat row. Stop sits in a TouchOnlyRow: the remote reaches Start and Pause/Resume, never
+     Stop, so a mis-press on the road can pause a run but not end it. The holder carries the
+     tile margin, so Stop and the primary tile are the same width. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/action_row_margin_top"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <de.codevoid.mototracklog.ui.TouchOnlyRow
         android:id="@+id/stopHolder"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/tile_margin">
 
         <TextView
             android:id="@+id/stopButton"
             style="@style/Widget.MotoTracklog.ActionTile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
             android:text="@string/action_stop" />
     </de.codevoid.mototracklog.ui.TouchOnlyRow>
 
     <TextView
         android:id="@+id/primaryButton"
-        style="@style/Widget.MotoTracklog.ActionTile" />
+        style="@style/Widget.MotoTracklog.ActionTile"
+        android:layout_height="match_parent" />
 </LinearLayout>
