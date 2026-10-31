@@ -194,6 +194,7 @@ class RecordActivity : AppCompatActivity() {
         requestedOrientation = orientationStore.orientation
         LoggingStateHolder.uiVisible = true
         refreshPlatformState()
+        resumeInterruptedRun()
         viewModel.refreshLatestRun()
         settingsTilesCache = null
         renderMode()
@@ -227,6 +228,18 @@ class RecordActivity : AppCompatActivity() {
     private fun refreshPlatformState() {
         internalGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         preciseLocation = hasPreciseLocation()
+    }
+
+    /**
+     * A run the platform would not resume in the background (no background location, a refused
+     * restart) continues once the app is in front, where the location service may start. Only
+     * Stop ends a run, so a pending one takes precedence over a new Start.
+     */
+    private fun resumeInterruptedRun() {
+        val state = LoggingStateHolder.state.value
+        if (ActiveRunStore(this).runId != null && !state.isLogging && currentStatus(state) == RecordStatus.Idle) {
+            LoggingService.resume(this)
+        }
     }
 
     private fun currentStatus(state: LoggingState): RecordStatus =
