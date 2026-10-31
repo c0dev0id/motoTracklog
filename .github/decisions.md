@@ -112,7 +112,17 @@ ride is being recorded; Searching and Receiver off already name the receiver's t
 
 ### Status colours
 The accent while points arrive, muted while paused, and a new `alert` token for anything
-that stops or starves a run. motoLauncher's palette had no colour for a fault.
+that stops or starves a run. motoLauncher's palette had no colour for a fault. The
+status word is large text, so these hold 3:1 on the background (`ColorContrastTest`).
+
+### Text holds 4.5:1 on every fill, in both themes
+The palette follows motoLauncher. The pressed fill is a per-theme value, a light accent
+tint in the light theme and a deep accent in the dark, so `on_surface` and
+`on_surface_muted` read on it unchanged. Text on a `tile_focused` fill is
+`on_tile_focused`. A colour that depends on a view's state is a colour state list in
+`res/color/`, and code only sets the state: `isActivated` on the Settings button. The
+header buttons therefore share one style and no longer fall back to Material's primary
+fill, which drew Runs as if it were active.
 
 ### Six live values while recording, the latest run while idle
 Satellites, accuracy, points, rate, speed and GPS time, in display-only stat tiles. Idle,

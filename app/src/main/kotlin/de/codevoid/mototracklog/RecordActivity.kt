@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.content.res.ColorStateList
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
@@ -100,8 +99,6 @@ class RecordActivity : AppCompatActivity() {
     private val formats by lazy { Formats(Locale.getDefault(), ZoneId.systemDefault()) }
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
     private val columns get() = if (isPortrait) 3 else 4
-    private val defaultSettingsTint by lazy { ColorStateList.valueOf(ContextCompat.getColor(this, R.color.tile_default)) }
-    private val activeSettingsTint by lazy { ColorStateList.valueOf(ContextCompat.getColor(this, R.color.tile_focused)) }
     // Invalidated by every tile that changes state, and on resume.
     private var settingsTilesCache: List<TileItem>? = null
 
@@ -267,7 +264,7 @@ class RecordActivity : AppCompatActivity() {
 
     private fun renderMode() {
         val settings = viewModel.isSettingsMode
-        binding.settingsButton.backgroundTintList = if (settings) activeSettingsTint else defaultSettingsTint
+        binding.settingsButton.isActivated = settings
         binding.recordContent.visibility = if (settings) View.GONE else View.VISIBLE
         binding.settingsGrid.visibility = if (settings) View.VISIBLE else View.GONE
         if (settings) {
