@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MotoTracklog" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
+        <item name="colorPrimary">@color/tile_focused</item>
+        <item name="colorOnPrimary">@color/on_surface</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.MotoTracklog.Dialog.Alert</item>
+    </style>
+
+    <!-- Dialog chrome lives here, not in code. Theme.MotoTracklog.Dialog is for plain
+         Dialog(context, theme); the overlay is what AlertDialog.Builder(context) picks up
+         via alertDialogTheme, so callers never name a theme. -->
+    <style name="Theme.MotoTracklog.Dialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorPrimary">@color/tile_focused</item>
+        <item name="colorOnPrimary">@color/on_surface</item>
+    </style>
+
+    <style name="ThemeOverlay.MotoTracklog.Dialog.Alert" parent="ThemeOverlay.Material3.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorPrimary">@color/tile_focused</item>
+        <item name="colorOnPrimary">@color/on_surface</item>
+    </style>
+
+    <!-- Glove-sized header control; every button in a TouchOnlyRow header uses this. -->
+    <style name="Widget.MotoTracklog.HeaderButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/header_button_margin_start</item>
+        <item name="android:minHeight">@dimen/header_button_min_height</item>
+    </style>
+
+    <!-- The screen title beside the back button in a header. -->
+    <style name="Widget.MotoTracklog.HeaderTitle" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/michroma</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textSize">@dimen/text_header_title</item>
+    </style>
+
+    <!-- One action row of a tile-styled dialog. parent="" because a dotted name would
+         otherwise be read as inheriting from a Widget.MotoTracklog style that does not
+         exist. -->
+    <style name="Widget.MotoTracklog.DialogAction" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dialog_action_height</item>
+        <item name="android:layout_marginTop">@dimen/dialog_action_margin_top</item>
+        <item name="android:background">@drawable/tile_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textSize">@dimen/text_dialog_action</item>
+    </style>
+
+    <!-- A screen's verb (Start, Pause, Stop, Share GPX): a full-height text tile. -->
+    <style name="Widget.MotoTracklog.ActionTile" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/action_tile_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/tile_margin</item>
+        <item name="android:background">@drawable/tile_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">@font/michroma</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textSize">@dimen/text_action_tile</item>
+    </style>
+</resources>

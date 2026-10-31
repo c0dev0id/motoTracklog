@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tablet overrides (sw >= 600dp): the 7" 1920x1080 handlebar device. -->
+<resources>
+    <dimen name="tile_height">168dp</dimen>
+    <dimen name="tile_margin">6dp</dimen>
+    <dimen name="tile_padding">8dp</dimen>
+    <dimen name="tile_icon_size">72dp</dimen>
+    <dimen name="tile_label_margin_top">10dp</dimen>
+    <dimen name="tile_subtitle_margin_top">4dp</dimen>
+    <dimen name="text_tile_label">18sp</dimen>
+    <dimen name="text_tile_subtitle">14sp</dimen>
+
+    <dimen name="screen_padding">10dp</dimen>
+
+    <dimen name="header_margin_bottom">8dp</dimen>
+    <dimen name="back_button_size">56dp</dimen>
+    <dimen name="back_button_margin_end">8dp</dimen>
+    <dimen name="header_button_margin_start">8dp</dimen>
+    <dimen name="header_button_min_height">56dp</dimen>
+    <dimen name="text_header_title">24sp</dimen>
+
+    <dimen name="dialog_padding">20dp</dimen>
+    <dimen name="text_dialog_label">24sp</dimen>
+    <dimen name="dialog_action_height">72dp</dimen>
+    <dimen name="dialog_action_margin_top">12dp</dimen>
+    <dimen name="text_dialog_action">22sp</dimen>
+    <dimen name="dialog_min_width">480dp</dimen>
+
+    <dimen name="status_padding">12dp</dimen>
+    <dimen name="text_status_word">44sp</dimen>
+    <dimen name="text_status_subtitle">20sp</dimen>
+    <dimen name="status_subtitle_margin_top">6dp</dimen>
+
+    <dimen name="action_tile_height">128dp</dimen>
+    <dimen name="action_row_margin_top">16dp</dimen>
+    <dimen name="text_action_tile">28sp</dimen>
+
+    <dimen name="stat_tile_padding">10dp</dimen>
+    <dimen name="text_stat_label">16sp</dimen>
+    <dimen name="text_stat_value">34sp</dimen>
+    <dimen name="text_stat_unit">16sp</dimen>
+    <dimen name="stat_unit_margin_start">6dp</dimen>
+
+    <dimen name="list_row_min_height">96dp</dimen>
+    <dimen name="list_row_margin">6dp</dimen>
+    <dimen name="list_row_padding_h">20dp</dimen>
+    <dimen name="list_row_padding_v">10dp</dimen>
+    <dimen name="text_list_row_title">22sp</dimen>
+    <dimen name="text_list_row_subtitle">16sp</dimen>
+    <dimen name="list_row_subtitle_margin_top">4dp</dimen>
+
+    <dimen name="text_result_value">44sp</dimen>
+    <dimen name="text_result_detail">20sp</dimen>
+    <dimen name="text_empty">22sp</dimen>
+</resources>
