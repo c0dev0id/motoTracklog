@@ -91,6 +91,7 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecordBinding
     private val viewModel: RecordViewModel by viewModels()
     private val settingsAdapter = TileAdapter(emptyList())
+    private val activeRun by lazy { ActiveRunStore(this) }
     private val sourceStore by lazy { SourceStore(this) }
     private val unitsStore by lazy { UnitsStore(this) }
     private val debugLogStore by lazy { DebugLogStore(this) }
@@ -131,6 +132,7 @@ class RecordActivity : AppCompatActivity() {
     private val providersChanged = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             refreshPlatformState()
+            resumeInterruptedRun()
             renderRecord()
         }
     }
@@ -232,12 +234,12 @@ class RecordActivity : AppCompatActivity() {
 
     /**
      * A run the platform would not resume in the background (no background location, a refused
-     * restart) continues once the app is in front, where the location service may start. Only
-     * Stop ends a run, so a pending one takes precedence over a new Start.
+     * restart) continues once the app is in front, where the location service may start, and
+     * nothing blocks it.
      */
     private fun resumeInterruptedRun() {
         val state = LoggingStateHolder.state.value
-        if (ActiveRunStore(this).runId != null && !state.isLogging && currentStatus(state) == RecordStatus.Idle) {
+        if (activeRun.runId != null && !state.isLogging && currentStatus(state) == RecordStatus.Idle) {
             LoggingService.resume(this)
         }
     }
@@ -294,11 +296,13 @@ class RecordActivity : AppCompatActivity() {
         binding.status.statusSubtitle.text = statusSubtitle(status, state, external)
 
         val primary = binding.actions.primaryButton
+        // A run that was not stopped is continued by Start (LoggingService.start), so it says so.
+        val resumable = state.isPaused || (!state.isLogging && activeRun.runId != null)
         primary.setText(
             when {
-                !state.isLogging -> R.string.action_start
-                state.isPaused -> R.string.action_resume
-                else -> R.string.action_pause
+                resumable -> R.string.action_resume
+                state.isLogging -> R.string.action_pause
+                else -> R.string.action_start
             }
         )
         val enabled = state.isLogging || status == RecordStatus.Idle
@@ -450,7 +454,7 @@ class RecordActivity : AppCompatActivity() {
     // The service reads the source when a run starts or resumes; switching it under a running
     // run would leave the screen describing a source the run is not using.
     private fun sourceTile(): TileItem {
-        val locked = ActiveRunStore(this).runId != null
+        val locked = activeRun.runId != null
         return TileItem(
             label = getString(R.string.gps_source),
             subtitle = if (locked) {

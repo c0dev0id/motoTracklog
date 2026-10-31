@@ -107,15 +107,15 @@ class LoggingService : Service(), FixSink {
             // Guarded: these also arrive from the notification, which can outlive a dead run.
             ACTION_PAUSE -> handler.post { if (running) setPaused(true) }
             ACTION_UNPAUSE -> handler.post { if (running) setPaused(false) }
-            ACTION_START -> beginForegroundAndLog(newRun = true)
+            // Only Stop ends a run: a Start while one is pending continues it.
+            ACTION_START -> beginForegroundAndLog(newRun = activeRun.runId == null)
             else -> beginForegroundAndLog(newRun = false) // ACTION_RESUME or sticky restart (null)
         }
         return START_STICKY
     }
 
     private fun beginForegroundAndLog(newRun: Boolean) {
-        // Before the id is computed: a second ACTION_START (a double press, a redelivered intent)
-        // would otherwise repoint the active-run marker at an id nothing ever writes.
+        // A Start or Resume for the live run (a double press, a redelivered intent) changes nothing.
         if (running) return
         val id = if (newRun) {
             System.currentTimeMillis().also { activeRun.start(it) }
@@ -525,6 +525,7 @@ class LoggingService : Service(), FixSink {
         private const val NOTIF_THROTTLE_MS = 2_000L
         private const val RATE_WINDOW = 10
 
+        /** Starts a new run, or continues the pending one if it was never stopped. */
         fun start(context: Context) = context.startForegroundService(intent(context, ACTION_START))
         fun stop(context: Context) = context.startService(intent(context, ACTION_STOP))
         fun resume(context: Context) = context.startForegroundService(intent(context, ACTION_RESUME))

@@ -163,7 +163,10 @@ up yet, so clearing the marker there would end a run the rider never stopped.
 Without background location, neither the boot receiver nor a sticky restart may start
 the location service, and the run's marker stays behind. gpsLog then showed Ready, and a
 Start began a second run over the marker. The Record screen now resumes the pending run
-on resume whenever nothing blocks a start, so only Stop ends a run.
+whenever nothing blocks a start: on resume, and when Location is switched on. The service
+guarantees the rest: a Start while a marker is set continues that run, whoever sends it,
+so only Stop ends a run. The primary tile reads Resume in that state, because that is
+what it does.
 
 ### No wake lock, no `fdatasync`
 The location service type keeps the subsystems running. A process kill loses nothing

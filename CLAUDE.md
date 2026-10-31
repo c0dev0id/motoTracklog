@@ -85,9 +85,10 @@ Package layout under `de.codevoid.mototracklog`:
   three platform facts (`hasInternalGps`, Location switched on, precise location); they
   are re-read on resume and from a `PROVIDERS_CHANGED_ACTION` receiver registered for the
   started lifetime, because the Location switch is flipped from the shade without pausing
-  the screen. The Start tile is enabled exactly when the status is `Idle`. On resume, a
-  run whose marker is set but whose service is not running is resumed (`resumeInterruptedRun`),
-  covering a reboot or restart the platform refused in the background. Settings mode
+  the screen. The Start tile is enabled exactly when the status is `Idle`. On resume and when
+  Location is switched on, a run whose marker is set but whose service is not running is
+  resumed (`resumeInterruptedRun`), covering a reboot or restart the platform refused in the
+  background; the primary tile reads Resume while such a run is pending. Settings mode
   swaps the body for a `TileAdapter` grid (GPS source, units, debug log, share debug log,
   theme, orientation, navigation bar, permissions, update check); `settingsTilesCache` is
   cleared by every tile that changes state and on resume. The GPS source tile is locked
@@ -102,7 +103,8 @@ Package layout under `de.codevoid.mototracklog`:
   the previous computation, and re-reads the file each time instead of caching points.
   Share GPX writes `cacheDir/exports/motoTracklog-<start>.gpx` and opens the share sheet.
 - `service/LoggingService` — foreground service of type `location`, `START_STICKY`,
-  driven by `ACTION_START/RESUME/PAUSE/UNPAUSE/STOP`. All run state lives on the
+  driven by `ACTION_START/RESUME/PAUSE/UNPAUSE/STOP`; a Start while a run's marker is set
+  continues that run, so only Stop ends one. All run state lives on the
   `gps-logger` `HandlerThread`. Pause is cold (the source is released and the flag is
   persisted). A platform refusal (`startForeground`, a missing permission, no chipset,
   Bluetooth off) is caught and never crashes; only a run that never began gives up its
