@@ -133,9 +133,10 @@ Package layout under `de.codevoid.mototracklog`:
 - `ui/` — shared components (`KeyInput`, `Immersive`, `TouchOnlyRow`, `OptionsDialog`,
   `TileAdapter`, `ListRowAdapter`, `UpdateFlow`), and the pure helpers `Format.kt` and
   `RecordStatus.kt`, which stay free of Android imports.
-- `update/UpdateChecker` — motoLauncher's: a release build follows the latest release, a
-  `dev-` build the `dev` pre-release; the asset name `motoTracklog-<versionName>.apk`
-  carries the version.
+- `update/UpdateChecker` — motoLauncher's: a release build follows the latest release,
+  whose asset name `motoTracklog-<versionName>.apk` carries the version; a `dev-` build
+  asks the dist store's `latest` address (`DIST_LATEST`, JSON with `name`, `version` and
+  a relative `url`, read by `parseDistFile`).
 
 ## Resources & styling
 

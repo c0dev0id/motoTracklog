@@ -29,12 +29,37 @@ class UpdateCheckerTest {
         assertEquals("motoTracklog-dev-abc1234.apk", info.apkName)
     }
 
+    // The shape the dist store's latest address answers with.
+    private fun distFile(name: String = "motoTracklog-dev-abc1234.apk", version: String? = "\"dev-abc1234\"") = """
+        {"name":"$name","version":$version,"size":5242880,"sha256":"00ff",
+         "uploaded":"2026-10-31T22:00:00Z","url":"/dist/k3y/$name"}
+    """.trimIndent()
+
+    private val latest = "https://home.codevoid.de/dist/k3y/latest"
+
     @Test
-    fun devBuildsFollowTheDevPreReleaseAndReleasesTheLatestRelease() {
-        val releases = "https://api.github.com/repos/c0dev0id/motoTracklog/releases"
-        assertEquals("$releases/tags/dev", UpdateChecker.releaseApiUrl("dev-abc1234"))
-        assertEquals("$releases/tags/dev", UpdateChecker.releaseApiUrl("dev-local-debug"))
-        assertEquals("$releases/latest", UpdateChecker.releaseApiUrl("1.0.3"))
+    fun parseDistFileTakesTheVersionAndResolvesTheAddress() {
+        val info = UpdateChecker.parseDistFile(distFile(), latest)!!
+        assertEquals("dev-abc1234", info.versionName)
+        assertEquals("https://home.codevoid.de/dist/k3y/motoTracklog-dev-abc1234.apk", info.apkUrl)
+        assertEquals("motoTracklog-dev-abc1234.apk", info.apkName)
+    }
+
+    @Test
+    fun parseDistFileRejectsAFileWithoutAVersion() {
+        assertNull(UpdateChecker.parseDistFile(distFile(version = "null"), latest))
+        assertNull(UpdateChecker.parseDistFile("""{"name":"motoTracklog-dev-a.apk","url":"/dist/k3y/a"}""", latest))
+    }
+
+    @Test
+    fun parseDistFileRejectsANameThatIsNotABareApk() {
+        assertNull(UpdateChecker.parseDistFile(distFile(name = "notes.txt"), latest))
+        assertNull(UpdateChecker.parseDistFile(distFile(name = "../motoTracklog-dev-evil.apk"), latest))
+    }
+
+    @Test
+    fun parseDistFileRejectsAFileWithoutAnAddress() {
+        assertNull(UpdateChecker.parseDistFile("""{"name":"motoTracklog-dev-a.apk","version":"dev-a"}""", latest))
     }
 
     @Test

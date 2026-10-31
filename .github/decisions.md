@@ -251,8 +251,14 @@ The updater lives in `main`; the github source set adds `INTERNET` and
 when it is added.
 
 ### Update channels, version code and releases follow motoLauncher
-A release build queries the latest release, a `dev-` build the `dev` pre-release; the
-asset name carries the version. `versionCode` is the commit count of `main`. Releases are
+A release build queries GitHub's latest release and takes its version from the asset
+name. A `dev-` build queries the `latest` address of the home.codevoid.de dist store and
+takes the version the push sent. The store's `latest` is the newest push to one dist
+repository, so a dist repository is one channel and only dev builds push to this one.
+The read key in `UpdateChecker` is no secret: it ships in every APK. CI names the file
+`motoTracklog-<versionName>.apk` like the GitHub asset, because `deleteInstalledUpdate()`
+finds the installed update by that name. The `dev` pre-release stays as a download page;
+the updater no longer reads it. `versionCode` is the commit count of `main`. Releases are
 cut by hand from `main` and pushed atomically after the build succeeds.
 
 ## Build and CI

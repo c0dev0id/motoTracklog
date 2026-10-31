@@ -14,7 +14,7 @@ It runs on motorcycle navigation devices and is built for gloved hands and a han
 - **Survives reboots** — an interrupted ride continues until you stop it.
 - **GPX export** — filter by accuracy, distance or interval, then share.
 - **Merge and delete** — join a ride with the one before it, or remove it.
-- **Updates on request** — checks GitHub only when you ask.
+- **Updates on request** — checks for a newer version only when you ask.
 
 ## Getting started
 
