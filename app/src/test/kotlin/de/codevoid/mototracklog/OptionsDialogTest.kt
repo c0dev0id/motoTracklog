@@ -58,9 +58,15 @@ class OptionsDialogTest {
     }
 
     @Test
-    fun theSelectedRowIsDrawnDifferentlyFromTheRest() {
+    fun onlyTheSelectedRowIsMarkedSelected() {
         // With the tile hidden behind the dialog, this is the only indication of where the
-        // setting currently stands.
+        // setting currently stands. tile_background and dialog_action_text draw the state.
+        val dialog = show(selectedIndex = 3)
+        assertEquals(listOf(false, false, false, true), rows(dialog).map { it.isSelected })
+    }
+
+    @Test
+    fun theSelectedRowIsDrawnDifferentlyFromTheRest() {
         val dialog = show(selectedIndex = 3)
         val colours = rows(dialog).map { it.currentTextColor }
         assertNotEquals(colours[0], colours[3])
@@ -71,8 +77,7 @@ class OptionsDialogTest {
     @Test
     fun anOutOfRangeSelectionSimplyMarksNothing() {
         val dialog = show(selectedIndex = -1)
-        val colours = rows(dialog).map { it.currentTextColor }
-        assertEquals(1, colours.distinct().size)
+        assertTrue(rows(dialog).none { it.isSelected })
     }
 
     @Test

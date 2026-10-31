@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import de.codevoid.mototracklog.R
 import de.codevoid.mototracklog.databinding.DialogOptionsBinding
 
@@ -19,8 +18,8 @@ import de.codevoid.mototracklog.databinding.DialogOptionsBinding
  *
  * Rows are inflated from `item_dialog_option` rather than constructed, so the style's
  * `layout_*` attributes are resolved by the parent the way the fixed rows' are. The
- * current value is drawn in the accent colour: with the tile hidden behind the dialog it
- * is otherwise not visible while choosing.
+ * current value's row is selected, which `tile_background` draws as a solid accent fill:
+ * with the tile hidden behind the dialog it is otherwise not visible while choosing.
  *
  * Returns the shown dialog; tests use the handle.
  */
@@ -41,9 +40,7 @@ fun showOptionsDialog(
     options.forEachIndexed { index, label ->
         val row = inflater.inflate(R.layout.item_dialog_option, binding.optionRows, false) as TextView
         row.text = label
-        if (index == selectedIndex) {
-            row.setTextColor(ContextCompat.getColor(context, R.color.tile_focused))
-        }
+        row.isSelected = index == selectedIndex
         row.setOnClickListener {
             dialog.dismiss()
             onPick(index)
