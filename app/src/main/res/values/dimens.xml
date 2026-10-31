@@ -4,8 +4,6 @@
     <dimen name="tile_height">120dp</dimen>
     <dimen name="tile_margin">4dp</dimen>
     <dimen name="tile_padding">6dp</dimen>
-    <dimen name="tile_icon_size">52dp</dimen>
-    <dimen name="tile_label_margin_top">7dp</dimen>
     <dimen name="tile_subtitle_margin_top">3dp</dimen>
     <dimen name="text_tile_label">14sp</dimen>
     <dimen name="text_tile_subtitle">11sp</dimen>

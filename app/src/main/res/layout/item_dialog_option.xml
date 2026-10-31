@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the options dialog. Inflated (not constructed) so the style's layout_*
+     attributes are resolved by the parent, exactly as the fixed tile-action rows are. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.MotoTracklog.DialogAction" />

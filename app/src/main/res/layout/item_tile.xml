@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A text tile: label and an optional subtitle, on the tile background. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tileRoot"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tile_height"
+    android:layout_margin="@dimen/tile_margin"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/tile_background"
+    android:focusable="true"
+    android:clickable="true"
+    android:padding="@dimen/tile_padding">
+
+    <TextView
+        android:id="@+id/tileLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/on_surface"
+        android:textSize="@dimen/text_tile_label" />
+
+    <TextView
+        android:id="@+id/tileSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tile_subtitle_margin_top"
+        android:gravity="center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/on_surface_muted"
+        android:textSize="@dimen/text_tile_subtitle"
+        android:visibility="gone" />
+</LinearLayout>
