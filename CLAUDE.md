@@ -69,6 +69,8 @@ styles) are copies. A change to one belongs in every app that carries it.
   recreates it and `layout-port` takes effect.
 - **Immersive**: the status bar is always hidden, the navigation bar follows `NavBarStore`.
   Every dialog goes through `showImmersive()`.
+- **Dialogs are touch-only.** Dialog rows and `AlertDialog` buttons are unfocusable
+  (`DialogAction`, `DialogButton`); Escape cancels.
 
 ## Architecture
 

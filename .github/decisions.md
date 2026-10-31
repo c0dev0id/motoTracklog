@@ -63,6 +63,14 @@ The Record header (Runs, Settings) and the latest-run row are in `TouchOnlyRow`s
 Export and settings mode are entered only by touch. Once there, tiles and rows are
 focusable as in motoLauncher's settings mode, and Escape leaves.
 
+### Dialog controls are touch-only
+A touch opens every dialog, but the first remote key afterwards used to focus its first
+row or button, and Enter then picked a setting or confirmed a delete. Every dialog row
+(`Widget.MotoTracklog.DialogAction`) and every `AlertDialog` button
+(`Widget.MotoTracklog.DialogButton`, through `buttonBarButtonStyle` in the alert overlay,
+which AppCompat resolves for all three buttons) is unfocusable. Escape still cancels a
+dialog with nothing focused. Carried over from motoLauncher.
+
 ### `TouchOnlyRow` closes every path to focus that is not a touch
 The platform gives focus without a touch in three ways: dpad and Tab search
 (`addFocusables`), default focus at window start, on leaving touch mode and after the

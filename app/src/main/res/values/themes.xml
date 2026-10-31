@@ -31,6 +31,14 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="colorPrimary">@color/tile_focused</item>
         <item name="colorOnPrimary">@color/on_surface</item>
+        <item name="buttonBarButtonStyle">@style/Widget.MotoTracklog.DialogButton</item>
+    </style>
+
+    <!-- Button-bar button of every AlertDialog: the Material3 dialog button in on_surface,
+         touch-only like every dialog control. -->
+    <style name="Widget.MotoTracklog.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog.Flush">
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:focusable">false</item>
     </style>
 
     <!-- Glove-sized header control; every button in a TouchOnlyRow header uses this. -->
@@ -53,16 +61,16 @@
         <item name="android:textSize">@dimen/text_header_title</item>
     </style>
 
-    <!-- One action row of a tile-styled dialog. parent="" because a dotted name would
-         otherwise be read as inheriting from a Widget.MotoTracklog style that does not
-         exist. -->
+    <!-- One action row of a tile-styled dialog, touch-only like every dialog control.
+         parent="" because a dotted name would otherwise be read as inheriting from a
+         Widget.MotoTracklog style that does not exist. -->
     <style name="Widget.MotoTracklog.DialogAction" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dialog_action_height</item>
         <item name="android:layout_marginTop">@dimen/dialog_action_margin_top</item>
         <item name="android:background">@drawable/tile_background</item>
         <item name="android:gravity">center</item>
-        <item name="android:focusable">true</item>
+        <item name="android:focusable">false</item>
         <item name="android:clickable">true</item>
         <item name="android:textColor">@color/on_surface</item>
         <item name="android:textSize">@dimen/text_dialog_action</item>

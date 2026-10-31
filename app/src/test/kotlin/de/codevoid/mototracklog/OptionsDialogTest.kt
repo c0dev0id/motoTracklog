@@ -80,4 +80,10 @@ class OptionsDialogTest {
         show()
         assertEquals(emptyList<Int>(), picked)
     }
+
+    // A touch opens the picker; the remote must not be able to change the setting.
+    @Test
+    fun noRowCanTakeFocus() {
+        assertTrue(rows(show()).none { it.isFocusable })
+    }
 }
