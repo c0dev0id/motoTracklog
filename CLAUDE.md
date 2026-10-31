@@ -154,11 +154,13 @@ motoLauncher: `Check` on every branch push except `main` (release-script tests, 
 Gradle invocation for lint, unit tests and the debug APK, uploaded as `app-debug`);
 `Build` on push to `main` (lint of the release variant, tests, signed
 `assembleGithubRelease`, the `dev` pre-release recreated with
-`motoTracklog-dev-<sha>.apk`, and a separate `dist` job without `GITHUB_TOKEN`
-permissions that pushes the same file to the home.codevoid.de dist store with
-`?version=dev-<sha>`; `DIST_TOKEN`, which selects the dist repository, reaches only that
-step); `Release` by hand from `main` (next `1.0.x`, changelog
-section as notes, atomic push of commit and tag, GitHub release). `versionCode` is the
+`motoTracklog-dev-<sha>.apk`, and a `dist` job that pushes the same file to the
+home.codevoid.de dist store's nightly channel); `Release` by hand from `main` (next
+`1.0.x`, changelog section as notes, atomic push of commit and tag, GitHub release, and a
+`dist` job that pushes the APK to the release channel). Each `dist` job PUTs
+`/dist/<channel>/motoTracklog-<versionName>.apk?version=<versionName>`, has no
+`GITHUB_TOKEN` permissions, and is the only place `DIST_TOKEN`, which selects the dist
+repository, reaches. `versionCode` is the
 commit count of `main`. Signing comes from the `SIGNING_KEYSTORE_*` / `SIGNING_KEY_*`
 secrets; never commit signing material.
 

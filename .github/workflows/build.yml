@@ -148,7 +148,7 @@ jobs:
           name: app-release
 
       # The token selects the dist repository; the version equals the build's versionName.
-      - name: Push the dev APK to the dist store
+      - name: Push the dev APK to the nightly channel
         env:
           DIST_TOKEN: ${{ secrets.DIST_TOKEN }}
         run: |
@@ -156,4 +156,4 @@ jobs:
           curl -fsS -H "Authorization: Bearer $DIST_TOKEN" \
             -H "Content-Type: application/vnd.android.package-archive" \
             -T app-github-release.apk \
-            "https://home.codevoid.de/dist/motoTracklog-$version.apk?version=$version"
+            "https://home.codevoid.de/dist/nightly/motoTracklog-$version.apk?version=$version"
