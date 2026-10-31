@@ -75,7 +75,7 @@ GitHub Actions on `ubuntu-latest` with `gradle/actions/setup-gradle@v4`.
 | Workflow | Trigger | Runs | Produces |
 |---|---|---|---|
 | `Check` | push to any branch except `main`, manual | release script tests; lint and unit tests for `githubDebug`; `assembleGithubDebug` | `app-debug` artifact |
-| `Build` | push to `main` | `lintGithubRelease`, unit tests, signed `assembleGithubRelease` | `dev` pre-release |
+| `Build` | push to `main` | `lintGithubRelease`, unit tests, signed `assembleGithubRelease` | `dev` pre-release, dev APK in the home.codevoid.de dist store |
 | `Release` | manual, from `main` | signed `assembleGithubRelease` | `v1.0.x` tag and GitHub release |
 
 The project is not built locally.

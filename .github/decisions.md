@@ -259,6 +259,14 @@ cut by hand from `main` and pushed atomically after the build succeeds.
 
 ### Check, Build and Release as in motoLauncher
 `Check` lints, tests and builds the debug APK on every branch push in one Gradle
-invocation. `Build` republishes `dev` on push to `main`. `Release` is the only producer
-of a versioned release. The debug build has a `.debug` application ID, so a branch can be
+invocation. `Build` republishes `dev` and pushes the dev APK to the dist store on push
+to `main`. `Release` is the only producer of a versioned release. The debug build has a `.debug` application ID, so a branch can be
 tested beside the installed release, recording into its own storage.
+
+### The dist push is a job of its own
+`Build` pushes the dev APK to the home.codevoid.de dist store from a separate `dist` job,
+as motoLauncher does. It needs no `GITHUB_TOKEN` permissions, so `DIST_TOKEN` never
+shares a job with write access, and a failure on one side leaves the other published.
+The push is plain `curl -T`, which sends the `Content-Length` the store requires. The
+version sent is the full `dev-<sha>` version name, so the app compares it with its own
+`versionName` as is.
