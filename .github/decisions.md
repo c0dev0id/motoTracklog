@@ -63,6 +63,16 @@ The Record header (Runs, Settings) and the latest-run row are in `TouchOnlyRow`s
 Export and settings mode are entered only by touch. Once there, tiles and rows are
 focusable as in motoLauncher's settings mode, and Escape leaves.
 
+### `TouchOnlyRow` closes every path to focus that is not a touch
+The platform gives focus without a touch in three ways: dpad and Tab search
+(`addFocusables`), default focus at window start, on leaving touch mode and after the
+focused view goes away (`onRequestFocusInDescendants`), and the offer of a child that
+becomes focusable while nothing has focus (`focusableViewAvailable`). The row overrides
+all three. Closing only the first left the header reachable: after any touch, the next
+remote key restored default focus to the first focusable view in tree order, the Runs
+button. `FOCUS_BLOCK_DESCENDANTS` would close all three in one line but also refuse a
+child's own `requestFocus()`, which motoLauncher's search field makes when tapped.
+
 ### Permissions are asked once, up front, when precise location is missing
 Location (with notifications on Android 13+), then background location (Android 10+),
 then the battery-optimization exemption. Background location is what lets a reboot or a
