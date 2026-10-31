@@ -195,6 +195,13 @@ NMEA has no accuracy in metres, and the export filter drops points without one.
 3 s doubling to 60 s, cut short by `ACTION_ACL_CONNECTED` for the paired address.
 Receivers that never re-initiate a link are covered by the backoff alone.
 
+The ACL receiver is registered as exported. Below Android 13, `ContextCompat` implements
+`RECEIVER_NOT_EXPORTED` with a signature permission of the app's own, which only the
+system UID bypasses; the Bluetooth stack sends this broadcast from its own UID, so it was
+dropped. `ACTION_ACL_CONNECTED` is a protected broadcast that no app can send, so
+exporting the receiver opens nothing. The Location receiver on the Record screen stays
+unexported: that broadcast comes from the system UID.
+
 ### Bluetooth devices are not filtered
 Bluetooth has no class for a GNSS receiver; every paired classic or dual-mode device is
 offered and the rider picks.

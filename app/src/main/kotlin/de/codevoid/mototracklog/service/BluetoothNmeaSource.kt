@@ -82,7 +82,7 @@ class BluetoothNmeaSource(
             appContext,
             aclReceiver,
             IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED),
-            ContextCompat.RECEIVER_NOT_EXPORTED,
+            ContextCompat.RECEIVER_EXPORTED,
         )
         thread = Thread(::runLoop, "gps-bt-reader").also { it.start() }
     }
