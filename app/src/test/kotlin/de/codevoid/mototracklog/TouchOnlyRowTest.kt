@@ -1,89 +1,98 @@
 package de.codevoid.mototracklog
 
-import android.content.Context
+import android.app.Activity
 import android.view.View
-import android.view.View.MeasureSpec
 import android.widget.LinearLayout
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.platform.app.InstrumentationRegistry
 import de.codevoid.mototracklog.ui.TouchOnlyRow
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 
 /**
- * A row first in the tree, then a sibling outside it: the order in which the platform's default
- * focus would otherwise pick the row's child. The test views are focusable in touch mode, so the
- * results do not depend on the touch mode Robolectric starts in.
+ * A row above one other focusable view, in a window out of touch mode — the state after the
+ * first remote key, and the one in which the framework hands out focus by itself. Each test
+ * is one of the framework's ways of moving focus into a subtree without the child asking.
  */
 @RunWith(RobolectricTestRunner::class)
 class TouchOnlyRowTest {
 
-    private val context: Context = ApplicationProvider.getApplicationContext()
-    private val offered = mutableListOf<View>()
+    private lateinit var activity: Activity
+    private lateinit var root: LinearLayout
+    private lateinit var inside: View
+    private lateinit var outside: View
 
-    // Stands in for the window, which focuses the views offered to it while nothing has focus.
-    private val root = object : LinearLayout(context) {
-        override fun focusableViewAvailable(v: View) {
-            offered += v
+    @Before
+    fun showRowAboveAnotherView() {
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        activity = Robolectric.buildActivity(Activity::class.java).setup().get()
+        inside = focusableView()
+        outside = focusableView()
+        root = LinearLayout(activity).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(TouchOnlyRow(activity).apply { addView(inside) })
+            addView(outside)
         }
+        activity.setContentView(root)
     }
-    private val row = TouchOnlyRow(context)
-    private val inside = focusableView()
-    private val outside = focusableView()
 
-    init {
-        row.addView(inside, SIZE, SIZE)
-        root.addView(row, SIZE, SIZE)
-        root.addView(outside, SIZE, SIZE)
+    private fun focusableView() = View(activity).apply {
+        layoutParams = LinearLayout.LayoutParams(SIZE, SIZE)
+        isFocusable = true
     }
 
     @Test
-    fun dpadSearchFindsOnlyTheViewOutsideTheRow() {
+    fun focusSearchSkipsTheRow() {
         val focusables = ArrayList<View>()
         root.addFocusables(focusables, View.FOCUS_DOWN)
-
         assertEquals(listOf(outside), focusables)
     }
 
+    // The path the first remote key takes when it leaves touch mode.
     @Test
-    fun defaultFocusPassesTheRowBy() {
-        assertTrue(root.requestFocus())
-
+    fun defaultFocusSkipsTheRow() {
+        root.restoreDefaultFocus()
         assertTrue(outside.isFocused)
-        assertFalse(inside.isFocused)
     }
 
+    // The path a RecyclerView rebind takes when it removes the focused tile.
     @Test
-    fun aChildStillTakesFocusWhenItAsksForIt() {
+    fun refocusAfterTheFocusedViewIsRemovedSkipsTheRow() {
+        val removed = focusableView()
+        root.addView(removed)
+        assertTrue(removed.requestFocus())
+        root.removeView(removed)
+        assertTrue(outside.isFocused)
+    }
+
+    // The window hands focus to a view that becomes focusable while nothing has focus.
+    // The view outside the row shows that it would have.
+    @Test
+    fun aChildBecomingFocusableIsNotHandedFocus() {
+        inside.isEnabled = false
+        outside.isEnabled = false
+        assertNull(root.findFocus())
+
+        inside.isEnabled = true
+        assertNull(root.findFocus())
+
+        outside.isEnabled = true
+        assertTrue(outside.isFocused)
+    }
+
+    // A touch focuses the touched view directly.
+    @Test
+    fun aChildStillTakesFocusWhenItAsks() {
         assertTrue(inside.requestFocus())
-    }
-
-    @Test
-    fun aChildThatBecomesFocusableIsNotOfferedForFocus() {
-        val laterInside = View(context)
-        val laterOutside = View(context)
-        row.addView(laterInside, SIZE, SIZE)
-        root.addView(laterOutside, SIZE, SIZE)
-        val spec = MeasureSpec.makeMeasureSpec(SIZE * 4, MeasureSpec.EXACTLY)
-        root.measure(spec, spec)
-        root.layout(0, 0, SIZE * 4, SIZE * 4)
-        offered.clear()
-
-        laterInside.isFocusable = true
-        laterOutside.isFocusable = true
-
-        assertEquals(listOf(laterOutside), offered)
-    }
-
-    private fun focusableView() = View(context).apply {
-        isFocusable = true
-        isFocusableInTouchMode = true
+        assertTrue(inside.isFocused)
     }
 
     private companion object {
-        const val SIZE = 10
+        const val SIZE = 100
     }
 }
