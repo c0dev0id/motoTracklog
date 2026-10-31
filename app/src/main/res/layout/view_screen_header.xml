@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Back button and title of a secondary screen. Touch-only: Escape is the remote's way back. -->
+<de.codevoid.mototracklog.ui.TouchOnlyRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/header_margin_bottom"
+    android:gravity="center_vertical">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/back_button_size"
+        android:layout_height="@dimen/back_button_size"
+        android:layout_marginEnd="@dimen/back_button_margin_end"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_back"
+        android:contentDescription="@string/back"
+        android:scaleType="center" />
+
+    <TextView
+        android:id="@+id/headerTitle"
+        style="@style/Widget.MotoTracklog.HeaderTitle" />
+</de.codevoid.mototracklog.ui.TouchOnlyRow>

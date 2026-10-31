@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/status_padding">
+
+    <TextView
+        android:id="@+id/statusWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/michroma"
+        android:textColor="@color/on_surface"
+        android:textSize="@dimen/text_status_word" />
+
+    <TextView
+        android:id="@+id/statusSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/status_subtitle_margin_top"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/on_surface_muted"
+        android:textSize="@dimen/text_status_subtitle" />
+</LinearLayout>

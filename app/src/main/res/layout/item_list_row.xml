@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One entry of a list: a full-width row on the tile background, title over an optional
+     subtitle. The list counterpart of item_tile, for records identified by text. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/list_row_min_height"
+    android:layout_margin="@dimen/list_row_margin"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@drawable/tile_background"
+    android:focusable="true"
+    android:clickable="true"
+    android:paddingHorizontal="@dimen/list_row_padding_h"
+    android:paddingVertical="@dimen/list_row_padding_v">
+
+    <TextView
+        android:id="@+id/rowTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/on_surface"
+        android:textSize="@dimen/text_list_row_title" />
+
+    <TextView
+        android:id="@+id/rowSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/list_row_subtitle_margin_top"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/on_surface_muted"
+        android:textSize="@dimen/text_list_row_subtitle"
+        android:visibility="gone" />
+</LinearLayout>

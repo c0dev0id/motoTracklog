@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape: status and controls on the left, live values (or the latest run) on the
+     right. Settings mode swaps the whole body for the settings grid. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:padding="@dimen/screen_padding">
+
+    <de.codevoid.mototracklog.ui.TouchOnlyRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/header_margin_bottom"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/runsButton"
+            style="@style/Widget.MotoTracklog.HeaderButton"
+            android:layout_marginStart="0dp"
+            android:text="@string/runs" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            style="@style/Widget.MotoTracklog.HeaderButton"
+            android:text="@string/settings" />
+    </de.codevoid.mototracklog.ui.TouchOnlyRow>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/recordContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <include
+                    android:id="@+id/status"
+                    layout="@layout/view_record_status" />
+
+                <include
+                    android:id="@+id/actions"
+                    layout="@layout/view_record_actions" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/stats"
+                    layout="@layout/view_record_stats" />
+
+                <include
+                    android:id="@+id/latestRun"
+                    layout="@layout/view_latest_run" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settingsGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:descendantFocusability="afterDescendants"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>
